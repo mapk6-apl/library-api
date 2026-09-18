@@ -27,3 +27,9 @@ export const updateAuthor = (id: number, updatedFields: Partial<Omit<Author, 'id
     Object.assign(author, updatedFields)
     return author
 }
+
+export const deleteAuthor = (id: number): boolean => {
+    const initialLength = authors.length
+    authors = authors.filter((author) => author.id !== id)
+    return authors.length < initialLength
+}
