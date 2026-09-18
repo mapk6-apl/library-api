@@ -18,3 +18,12 @@ export const getAuthorById = (id: number): Author | undefined => {
     const author = authors.find((author) => author.id === id)
     return author
 }
+
+export const updateAuthor = (id: number, updatedFields: Partial<Omit<Author, 'id'>>): Author | undefined => {
+    const author = authors.find((author) => author.id === id)
+    if(!author) 
+        return undefined
+
+    Object.assign(author, updatedFields)
+    return author
+}
