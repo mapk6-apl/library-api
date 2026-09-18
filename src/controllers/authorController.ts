@@ -10,3 +10,11 @@ export const addAuthor = (name: string, bookTitle: string): Author => {
     return newAuthor
 }
 
+export const getAuthors = (): Author[] => {
+    return authors
+}
+
+export const getAuthorById = (id: number): Author | undefined => {
+    const author = authors.find((author) => author.id === id)
+    return author
+}
