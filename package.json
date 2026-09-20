@@ -17,6 +17,7 @@
     "@types/node": "^22.20.3",
     "body-parser": "^2.3.0",
     "express": "^5.2.1",
+    "express-validator": "^7.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^7.0.2"
   },

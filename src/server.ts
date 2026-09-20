@@ -6,7 +6,7 @@ const app: Express = express()
 const PORT = process.env.PORT || 3000 
 
 app.use(express.json())
-app.use(bodyParser.json())
+//app.use(bodyParser.json()) //same job as express.json
 
 app.use(loggerMiddleware)
 
