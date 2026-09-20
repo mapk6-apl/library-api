@@ -30,8 +30,7 @@ router.get('/:id', [param('id').isInt().withMessage('Id must be an integer')], (
 })
 
 router.post('/', [
-    body('name').notEmpty().withMessage('Author name required'),
-    body('bookTitle').notEmpty().withMessage('Book title required')
+    body('name').notEmpty().withMessage('Author name required')
 ], (req: Request, res: Response) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
