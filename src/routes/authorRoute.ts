@@ -6,3 +6,7 @@ const router = Router()
 let authors = [
     {}
 ]
+
+router.get('/', (req: Request, res: Response) => {
+    res.status(200).json(authors)
+})
