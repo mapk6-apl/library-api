@@ -4,8 +4,8 @@ import {body, param, validationResult} from "express-validator"
 
 const router = Router()
 
-const idRule = param('id').isInt().withMessage('id must be an integer')
-
+const idRule = param('id').isInt().withMessage('Id must be an integer')
+const authourRules = [body('name').isString().trim().notEmpty().withMessage('Author name required')]
 
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
