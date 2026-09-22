@@ -6,7 +6,7 @@ import {validate} from '../middleware/validate.js'
 const router = Router()
 
 const idRule = param('id').isInt().withMessage('Id must be an integer')
-const authourRules = [body('name').isString().trim().notEmpty().withMessage('Author name required')]
+const authorRules = [body('name').isString().trim().notEmpty().withMessage('Author name required')]
 
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
@@ -32,9 +32,7 @@ router.get('/:id', idRule, validate, (req: Request, res: Response) => {
     return res.status(400).json({errors: errors.array()})
 })
 
-router.post('/', [
-    body('name').notEmpty().withMessage('Author name required')
-], (req: Request, res: Response) => {
+router.post('/', authorRules, validate, (req: Request, res: Response) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
