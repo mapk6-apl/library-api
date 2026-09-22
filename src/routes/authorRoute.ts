@@ -1,6 +1,7 @@
 import {Router, type Request, type Response} from "express";
 import {addAuthor, getAuthors, getAuthorById, updateAuthor, deleteAuthor} from "../controllers/authorController.js"
 import {body, param, validationResult} from "express-validator"
+import {validate} from '../middleware/validate.js'
 
 const router = Router()
 
@@ -11,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
 })
 
-router.get('/:id', [param('id').isInt().withMessage('Id must be an integer')], (req: Request, res: Response) => {
+router.get('/:id', idRule, validate, (req: Request, res: Response) => {
     const errors = validationResult(req)
 
     //console.log(errors, "errors from express validator middleware")
