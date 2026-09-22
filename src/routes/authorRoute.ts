@@ -4,6 +4,9 @@ import {body, param, validationResult} from "express-validator"
 
 const router = Router()
 
+const idRule = param('id').isInt().withMessage('id must be an integer')
+
+
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
 })
