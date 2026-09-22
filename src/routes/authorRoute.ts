@@ -10,10 +10,12 @@ const authorRules = [
     body('name').isString().trim().notEmpty().withMessage('Author name required'),
     body('bio').isString().trim().notEmpty().withMessage("Author's bio required")]
 
+ //get all authors
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
 })
 
+//get author by id
 router.get('/:id', idRule, validate, (req: Request, res: Response) => {
     const errors = validationResult(req)
 
@@ -34,6 +36,7 @@ router.get('/:id', idRule, validate, (req: Request, res: Response) => {
     return res.status(400).json({errors: errors.array()})
 })
 
+//adding a new author
 router.post('/', authorRules, validate, (req: Request, res: Response) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -48,8 +51,9 @@ router.post('/', authorRules, validate, (req: Request, res: Response) => {
     res.status(201).json(newAuthor);
 })
 
+//updating author info
 router.put('/id:', idRule, authorRules, validate, (req: Request, res: Response) => {
-    const {name} = req.body
+    const {name, bio} = req.body
     const updated = updateAuthor(Number(req.params.id), {name, bio})
     if(!updated){
         res.status(404).json({error: 'Author not found'})
@@ -57,5 +61,15 @@ router.put('/id:', idRule, authorRules, validate, (req: Request, res: Response) 
     }
     res.status(200).json(updated)
 })
+
+router.delete('/id:', idRule, validate, (req: Request, res: Response) => {
+    if(!deleteAuthor(Number(req.params.id))){
+        res.status(404).json({error: 'Author not found'})
+        return
+    }
+    res.status(204).send()
+})
+
+router
 
 export default router
