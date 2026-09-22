@@ -6,7 +6,9 @@ import {validate} from '../middleware/validate.js'
 const router = Router()
 
 const idRule = param('id').isInt().withMessage('Id must be an integer')
-const authorRules = [body('name').isString().trim().notEmpty().withMessage('Author name required')]
+const authorRules = [
+    body('name').isString().trim().notEmpty().withMessage('Author name required'),
+    body('bio').isString().trim().notEmpty().withMessage("Author's bio required")]
 
 router.get('/', (req: Request, res: Response) => {
     res.status(200).json(getAuthors())
@@ -40,10 +42,20 @@ router.post('/', authorRules, validate, (req: Request, res: Response) => {
 
     //console.log(req, 'request');
 
-    const {name} = req.body;
-    const newAuthor = addAuthor(name);
+    const {name, bio} = req.body;
+    const newAuthor = addAuthor(name, bio);
 
     res.status(201).json(newAuthor);
+})
+
+router.put('/id:', idRule, authorRules, validate, (req: Request, res: Response) => {
+    const {name} = req.body
+    const updated = updateAuthor(Number(req.params.id), {name, bio})
+    if(!updated){
+        res.status(404).json({error: 'Author not found'})
+        return
+    }
+    res.status(200).json(updated)
 })
 
 export default router

@@ -4,8 +4,8 @@ let authors: Author[] = []; //author array
 
 let currentId = 1;
 
-export const addAuthor = (name: string): Author => {
-    const newAuthor: Author = {id: currentId++, name}
+export const addAuthor = (name: string, bio: string): Author => {
+    const newAuthor: Author = {id: currentId++, name, bio}
     authors.push(newAuthor)
     return newAuthor
 }
