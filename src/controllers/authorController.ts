@@ -1,4 +1,5 @@
 import {type Author} from '../models/author.js'
+import {AppError} from '../errors/AppError.js'
 
 let authors: Author[] = []; //author array
 
@@ -16,6 +17,7 @@ export const getAuthors = (): Author[] => {
 
 export const getAuthorById = (id: number): Author | undefined => {
     const author = authors.find((author) => author.id === id)
+    if(!author) throw new AppError(404, `Author with id ${id} not found`)
     return author
 }
 
@@ -33,3 +35,5 @@ export const deleteAuthor = (id: number): boolean => {
     authors = authors.filter((author) => author.id !== id)
     return authors.length < initialLength
 }
+
+export const authorExists = (id: number): boolean => authors.some((author) => author.id === id)
