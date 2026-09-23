@@ -40,3 +40,4 @@ router.delete('/:id', idRule, validate, (req: Request, res: Response) => {
     res.status(204).send()
 })
 
+export default router
