@@ -2,6 +2,7 @@ import {Router, type Request, type Response} from "express";
 import {addAuthor, getAuthors, getAuthorById, updateAuthor, deleteAuthor} from "../controllers/authorController.js"
 import {body, param, validationResult} from "express-validator"
 import {validate} from '../middleware/validate.js'
+import getBooksByAuthorId from '../controllers/authorController.js'
 
 const router = Router()
 
@@ -70,6 +71,14 @@ router.delete('/id:', idRule, validate, (req: Request, res: Response) => {
     res.status(204).send()
 })
 
-router
+router.get('/:id/books', idRule, validate, (req: Request, res: Response) => {
+    const author = getAuthorById(Number(req.params.id))
+
+    if(!author){
+        return res.status(404).send('Author not found')
+    }
+
+    res.status(200).json(getBooksByAuthorId(author.id))
+})
 
 export default router
