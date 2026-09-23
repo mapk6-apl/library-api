@@ -25,3 +25,31 @@ export const addBook = (title: string, authorId: number, year: number): Book => 
     books.push(book)
     return book
 }
+
+export const getBooks = (): Book[] => {
+    return books
+}
+
+export const getBookById = (id: number): Book => {
+    const book = books.find((book) => book.id === id)
+    if (!book) throw new AppError(404, `Book with id ${id} not found`)
+    return book
+}
+
+export const updateBook = (id: number, title: string, authorId: number, year: number): Book => {
+    const book = getBookById(id)
+    assertValid(title, authorId, id)
+    book.title = title
+    book.authorId = authorId
+    book.year = year
+    return book
+}
+
+export const deleteBook = (id: number): void => {
+    getBookById(id)
+    books = books.filter((book) => book.id !== id)
+}
+
+export const getBooksByAuthorId = (authorId: number): Book[] => {
+    return books.filter((book) => book.authorId === authorId)
+}

@@ -16,3 +16,4 @@ router.post('/', bookRules, validate, (req: Request, res: Response) => {
     const {title, authorId, year} = req.body
     res.status(201).json(addBook(title, authorId, year))
 })
+
